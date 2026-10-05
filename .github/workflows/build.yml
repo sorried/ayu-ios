@@ -253,8 +253,8 @@ jobs:
               print(f"::error::{msg}")
               sys.exit(1)
 
-          with zipfile.ZipFile(ipa) as z:
-              names = z.namelist()
+          z = zipfile.ZipFile(ipa)
+          names = z.namelist()
 
           # Exactly one top-level .app under Payload/. Derive the name from any
           # entry under it (directory markers are not guaranteed by zip writers).
