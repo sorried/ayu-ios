@@ -5,10 +5,11 @@ The primary app icon is a PNG-generated asset catalog, not the Icon Composer
 
 ## Source
 
-`docs/assets/icon-1024.png`. Note: the file on disk is 512x512 RGBA with a
-transparent rounded-corner mask, not 1024x1024 opaque as first described. The
-script flattens that transparency onto the image's average opaque colour and
-upscales to 1024 for the marketing slot.
+`docs/assets/icon-1024.png` — the AyuGram app icon (from
+`AyuGram/AyuGramDesktop`, `Telegram/Resources/art/icon512@2x.png`). It is 1024x1024
+RGBA with transparent rounded corners. The script flattens that transparency onto
+the icon's dominant opaque colour (its background) so the corners blend
+seamlessly and iOS shows no black.
 
 ## Regenerate
 

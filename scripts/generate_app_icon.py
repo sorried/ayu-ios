@@ -39,22 +39,32 @@ def pixel_size(name: str, scale: int) -> int:
 
 
 def flatten_alpha(im: Image.Image) -> Image.Image:
-    """Composite onto the average opaque colour so the result has no alpha."""
+    """Composite onto the dominant opaque colour so the result has no alpha.
+
+    The average of all opaque pixels is wrong for an icon that is a logo on a
+    solid background (it bleeds the logo colour into the corners). The most
+    common quantised opaque colour is the background, so the rounded corners are
+    filled with the same colour they are already surrounded by and the seam is
+    invisible.
+    """
+    from collections import Counter
+
     rgba = im.convert("RGBA")
     w, h = rgba.size
     px = rgba.load()
-    r_sum = g_sum = b_sum = count = 0
+    counts: Counter = Counter()
     for y in range(0, h, 4):
         for x in range(0, w, 4):
             r, g, b, a = px[x, y]
             if a == 255:
-                r_sum += r
-                g_sum += g
-                b_sum += b
-                count += 1
-    average = (r_sum // count, g_sum // count, b_sum // count)
-    print(f"flattening onto average opaque colour {average}")
-    bg = Image.new("RGB", rgba.size, average)
+                counts[(r // 16 * 16, g // 16 * 16, b // 16 * 16)] += 1
+    if not counts:
+        background = (255, 255, 255)
+    else:
+        quantised = counts.most_common(1)[0][0]
+        background = (min(quantised[0] + 8, 255), min(quantised[1] + 8, 255), min(quantised[2] + 8, 255))
+    print(f"flattening onto dominant opaque colour {background}")
+    bg = Image.new("RGB", rgba.size, background)
     bg.paste(rgba, (0, 0), rgba)
     return bg
 
