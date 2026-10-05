@@ -300,6 +300,10 @@ jobs:
           if missing:
               fail(f"missing or empty Info.plist keys: {missing}")
 
+          # The app icon (compiled asset catalog) must be present.
+          if not any(n.endswith(".app/Assets.car") for n in names):
+              fail("Assets.car missing from app bundle (no compiled app icon)")
+
           # The fork author's api_id/api_hash must not leak into the binary.
           forbidden = [b"27989480", b"ff8662eec9630346532b13f56014c258"]
           leaked = []
