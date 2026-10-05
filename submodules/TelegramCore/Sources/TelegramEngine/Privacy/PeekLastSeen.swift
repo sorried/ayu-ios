@@ -26,7 +26,7 @@ private struct PeekLastSeenRestoreState: Codable {
 }
 
 private func peerRefs(_ peers: [PeerId: SelectivePrivacyPeer]) -> [PeekLastSeenRestoreState.PeerRef] {
-    return peers.keys.map { PeekLastSeenRestoreState.PeerRef(namespace: $0.namespace, id: $0.id._internalGetInt64Value()) }
+    return peers.keys.map { PeekLastSeenRestoreState.PeerRef(namespace: $0.namespace._internalGetInt32Value(), id: $0.id._internalGetInt64Value()) }
 }
 
 private func restoreState(for presence: SelectivePrivacySettings) -> PeekLastSeenRestoreState {
@@ -44,7 +44,7 @@ private func presence(from state: PeekLastSeenRestoreState, transaction: Transac
     func resolve(_ refs: [PeekLastSeenRestoreState.PeerRef]) -> [PeerId: SelectivePrivacyPeer] {
         var result: [PeerId: SelectivePrivacyPeer] = [:]
         for ref in refs {
-            let peerId = PeerId(namespace: ref.namespace, id: PeerId.Id._internalFromInt64Value(ref.id))
+            let peerId = PeerId(namespace: PeerId.Namespace._internalFromInt32Value(ref.namespace), id: PeerId.Id._internalFromInt64Value(ref.id))
             if let peer = transaction.getPeer(peerId) {
                 result[peerId] = SelectivePrivacyPeer(peer: peer, participantCount: nil)
             }
@@ -96,8 +96,10 @@ private func pollExactLastSeen(account: Account, peerId: PeerId, attempts: Int) 
             return .single(nil)
         }
         return .single(nil)
-        |> delay(0.8, queue: .concurrentDefaultQueue())
-        |> mapToSignal { _ in pollExactLastSeen(account: account, peerId: peerId, attempts: attempts - 1) }
+        |> delay(0.8, queue: Queue.concurrentDefaultQueue())
+        |> mapToSignal { (_: Int32?) -> Signal<Int32?, NoError> in
+            return pollExactLastSeen(account: account, peerId: peerId, attempts: attempts - 1)
+        }
     }
 }
 
