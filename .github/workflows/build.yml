@@ -50,7 +50,7 @@ jobs:
       BAZEL_REPO_CACHE: ${{ github.workspace }}/.telegram-bazel-repo-cache
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           fetch-depth: 1
           submodules: false
@@ -107,7 +107,7 @@ jobs:
           df -h /
 
       - name: Cache Bazel (warm incremental compiles)
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: |
             ${{ env.BAZEL_CACHE_DIR }}
@@ -335,7 +335,7 @@ jobs:
 
       - name: Upload debug symbols
         if: ${{ inputs.generate_dsym && (success() || failure()) }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
           name: Telegram-${{ env.APP_VERSION }}-${{ env.BUILD_NUMBER }}-dSYMs
           path: build/artifacts/Telegram.DSYMs.zip
@@ -344,7 +344,7 @@ jobs:
 
       - name: Upload sideload IPA artifact
         if: success() || failure()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
           name: Telegram-${{ env.APP_VERSION }}-${{ env.BUILD_NUMBER }}-sideload
           path: artifacts/${{ env.IPA_NAME }}
