@@ -256,16 +256,25 @@ jobs:
           with zipfile.ZipFile(ipa) as z:
               names = z.namelist()
 
-          # Exactly one top-level .app under Payload/.
-          apps = sorted({n.split("/", 1)[1].split("/", 1)[0]
-                         for n in names
-                         if n.startswith("Payload/") and n.count("/") == 1 and n.endswith(".app/")})
+          # Exactly one top-level .app under Payload/. Derive the name from any
+          # entry under it (directory markers are not guaranteed by zip writers).
+          app_dirs = set()
+          for n in names:
+              if not n.startswith("Payload/"):
+                  continue
+              rest = n[len("Payload/"):]
+              if not rest:
+                  continue
+              top = rest.split("/", 1)[0]
+              if top.endswith(".app"):
+                  app_dirs.add(top)
+          apps = sorted(app_dirs)
           if len(apps) != 1:
               fail(f"expected exactly one .app in Payload, found {apps}")
           app = f"Payload/{apps[0]}"
 
           # No extension bundles (PlugIns dir or .appex) — extensions are disabled.
-          ext = [n for n in names if "/PlugIns/" in n or ".appex/" in n]
+          ext = [n for n in names if "/PlugIns/" in n or ".appex" in n]
           if ext:
               fail(f"unexpected extension bundles: {ext[:5]}")
 
