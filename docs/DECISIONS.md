@@ -6,7 +6,21 @@ Architectural decisions for the native fork. Populated as work proceeds.
   git history diverged from the public Telegram repo in 2019, so a merge-base diff
   is not a usable fork delta. Audit used whole-tree grep + fork-delta by author and
   file-presence (see SECURITY_REVIEW.md). Verdict clean.
-- Pending: re-estimate of Swift line count after the feature inventory (step 3).
+
+## Feature inventory (step 3)
+
+- **Re-estimated Swift line count: ~2-4k, down from PIVOT's 5-15k.** The fork
+  already carries the whole AyuGram core (ghost mode, save deleted, edit history,
+  kept dialogs, passcode, streamer, local premium, translator, regex filters,
+  secret chats). What is genuinely missing is peek last seen plus the materialgram
+  look/tweaks (Google Day/Dark themes, font, material icons, colourful reply
+  background, seekable round videos, delete >100, webview android spoof, unlimited
+  recent stickers, HTML chat export, custom sounds). See `FEATURES_NATIVE.md`.
+- **The fork's appearance is pinned to the iOS Messages look, not materialgram.**
+  `forkNormalizedThemeSettings` forces day/night; there are no Google Day/Dark
+  palettes. Adding the materialgram themes means adding two theme builders rather
+  than swapping the existing ones, and deciding (in step 4) whether materialgram
+  becomes the default look or an option.
 
 ## Workflow cleanup (step 2)
 

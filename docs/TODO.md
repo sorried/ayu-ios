@@ -5,7 +5,7 @@ legend: работает / частично / заглушка / не сдела
 
 - [x] 01 аудит безопасности: diff форка против TelegramMessenger/Telegram-iOS, SECURITY_REVIEW.md, LICENSE форка (чисто, см. SECURITY_REVIEW.md)
 - [ ] 02 CI: зелёная sideload-ipa без изменений кода, workflow_dispatch + paths-ignore + concurrency + bazel cache, проверка ipa в CI, ссылка на ран (CI зелёный: ран 37315771258; СТОП: ждать установки через SideStore)
-- [ ] 03 инвентарь: FEATURES_NATIVE.md (ayu + materialgram), сверка путей из PIVOT.md, пересчёт оценки строк в DECISIONS.md
+- [x] 03 инвентарь: FEATURES_NATIVE.md (ayu + materialgram), сверка путей из PIVOT.md, пересчёт оценки строк в DECISIONS.md (~2-4k)
 - [ ] 04 peek last seen
 - [ ] 05 kept-диалоги (удалённые/покинутые чаты остаются)
 - [ ] 06 секретные чаты в основном списке
