@@ -57,7 +57,7 @@ private enum MessageSavingHistoryEntry: ItemListNodeEntry {
             var body = record.text
             if let mediaPath = record.mediaPath, messageSavingRecordHasFile(record) {
                 let name = (mediaPath as NSString).lastPathComponent
-                body += "\n📎 \(name)"
+                body += "\n\(name)"
             }
             return ItemListMultilineTextItem(
                 presentationData: presentationData,

@@ -132,14 +132,14 @@ private enum ForkExtrasLocalizedString {
             "ForkExtras.BackendSystem": "System (Apple)",
             "ForkExtras.BackendApple": "On-Device (Apple)",
             "ForkExtras.SaveDeletedMessages": "Save Deleted Messages",
-            "ForkExtras.SaveDeletedMessagesFooter": "Keep deleted messages (yours and others), including one-time media, visible in chat (🧹). Also under View Deleted.",
+            "ForkExtras.SaveDeletedMessagesFooter": "Keep deleted messages (yours and others), including one-time media, visible in chat. Also under View Deleted.",
             "ForkExtras.SaveMessagesHistory": "Save Edit History",
             "ForkExtras.SaveMessagesHistoryFooter": "Keep previous text when a message is edited. Open Edit History from the message menu.",
             "ForkExtras.SaveMedia": "Save Media",
             "ForkExtras.SaveMediaFooter": "Copy attachments into local Saved Attachments on delete/TTL (own and others; AyuGram Android parity).",
             "ForkExtras.SaveForBots": "Also Save Bot Messages",
             "ForkExtras.AyuForward": "AyuForward",
-            "ForkExtras.AyuForwardFooter": "Forward from noforwards channels and deleted messages by re-uploading media without an author (AyuGram Android).",
+            "ForkExtras.AyuForwardFooter": "Forward from channels that block forwarding and from deleted messages by re-uploading media without an author (AyuGram Android).",
             "ForkExtras.BypassDownloadRestrictions": "Save Stories & Protected Media",
             "ForkExtras.BypassDownloadRestrictionsFooter": "Save stories and download protected media without Telegram Premium, even when forwarding is disabled (AyuGram Desktop).",
             "ForkExtras.ProactiveSaveMedia": "Proactively Download Media",
@@ -149,7 +149,7 @@ private enum ForkExtrasLocalizedString {
             "ForkExtras.EditedMessageMark": "Edited Message Mark",
             "ForkExtras.EditedMessageMarkFooter": "Replaces Telegram's \"edited\" label. Leave empty for the default.",
             "ForkExtras.LocalPremium": "Local Telegram Premium",
-            "ForkExtras.LocalPremiumFooter": "Unlock client-side Premium UX on this device: Story Stealth Mode, HD stories, sticker/emoji cosmetics. Does not buy real Premium or change your badge for others.",
+            "ForkExtras.LocalPremiumFooter": "Unlock client-side Premium features on this device: Story Stealth Mode, HD stories, sticker and emoji cosmetics. Does not buy real Premium or change your badge for others.",
             "ForkExtras.AutoFetchMtProxy": "Auto MTProxy",
             "ForkExtras.AutoFetchMtProxyFooter": "Keeps Telegram on the fastest live public MTProxy automatically. Auto servers stay hidden from the saved list. Third-party nodes cannot read chats, but they see your IP.",
             "ForkExtras.HideAds": "Hide Ads",
@@ -177,7 +177,6 @@ private enum ForkExtrasLocalizedString {
             "ForkExtras.ExportMessageSavingFailed": "Could not create the export bundle.",
             "ForkExtras.ImportMessageSavingDone": "Imported {count} new records.",
             "ForkExtras.ImportMessageSavingFailed": "Could not import this file.",
-            "ForkExtras.HubFooter": "Each row opens a grouped Settings list. Navigation, sheets and switches follow iOS conventions.",
             "ForkExtras.HubNinja": "Ninja",
             "ForkExtras.HubNinjaLabel": "Save, filters, bypass",
             "ForkExtras.HubGhost": "Ghost",
@@ -266,7 +265,7 @@ private enum ForkExtrasLocalizedString {
             "ForkExtras.BackendSystem": "Системный (Apple)",
             "ForkExtras.BackendApple": "На устройстве (Apple)",
             "ForkExtras.SaveDeletedMessages": "Сохранять удалённые",
-            "ForkExtras.SaveDeletedMessagesFooter": "Свои и чужие удалённые, включая одноразовые медиа, остаются в чате (🧹). Также в «Удалённые».",
+            "ForkExtras.SaveDeletedMessagesFooter": "Свои и чужие удалённые, включая одноразовые медиа, остаются в чате. Также в «Удалённые».",
             "ForkExtras.SaveMessagesHistory": "История правок",
             "ForkExtras.SaveMessagesHistoryFooter": "Хранить предыдущий текст при редактировании. Открывается из меню сообщения.",
             "ForkExtras.SaveMedia": "Сохранять медиа",
@@ -311,7 +310,6 @@ private enum ForkExtrasLocalizedString {
             "ForkExtras.ExportMessageSavingFailed": "Не удалось создать пакет экспорта.",
             "ForkExtras.ImportMessageSavingDone": "Добавлено новых записей: {count}.",
             "ForkExtras.ImportMessageSavingFailed": "Не удалось импортировать файл.",
-            "ForkExtras.HubFooter": "Каждая строка открывает grouped-список как в Настройках iOS: навигация, шиты и переключатели системные.",
             "ForkExtras.HubNinja": "Ниндзя",
             "ForkExtras.HubNinjaLabel": "Сохранение, фильтры, обход",
             "ForkExtras.HubGhost": "Невидимка",
@@ -479,7 +477,6 @@ private enum ForkExtrasLocalizedString {
     static var exportMessageSavingFailed: String { string(forKey: "ForkExtras.ExportMessageSavingFailed") }
     static var importMessageSavingDone: String { string(forKey: "ForkExtras.ImportMessageSavingDone") }
     static var importMessageSavingFailed: String { string(forKey: "ForkExtras.ImportMessageSavingFailed") }
-    static var hubFooter: String { string(forKey: "ForkExtras.HubFooter") }
     static var hubNinja: String { string(forKey: "ForkExtras.HubNinja") }
     static var hubNinjaLabel: String { string(forKey: "ForkExtras.HubNinjaLabel") }
     static var hubGhost: String { string(forKey: "ForkExtras.HubGhost") }
@@ -742,7 +739,6 @@ private enum ForkExtrasEntry: ItemListNodeEntry {
     case hubInterface
     case hubChat
     case hubNetwork
-    case hubFooter
     case ghostModeMaster(Bool)
     case ghostDontReadMessages(Bool)
     case ghostDontReadStories(Bool)
@@ -850,7 +846,7 @@ private enum ForkExtrasEntry: ItemListNodeEntry {
 
     var section: ItemListSectionId {
         switch self {
-        case .hubNinja, .hubGhost, .hubPrivacy, .hubInterface, .hubChat, .hubNetwork, .hubFooter:
+        case .hubNinja, .hubGhost, .hubPrivacy, .hubInterface, .hubChat, .hubNetwork:
             return ForkExtrasSection.hub.rawValue
         case .ghostModeMaster, .ghostDontReadMessages, .ghostDontReadStories, .ghostDontSendOnline, .ghostDontSendTyping, .ghostGoOfflineAutomatically, .ghostGoOfflineAutomaticallyFooter, .ghostReadOnInteract, .ghostReadOnInteractFooter, .ghostAlertBeforeOpeningStory, .ghostAlertBeforeOpeningStoryFooter, .ghostScheduleMessages, .ghostScheduleMessagesFooter, .ghostModeFooter:
             return ForkExtrasSection.ghost.rawValue
@@ -899,7 +895,6 @@ private enum ForkExtrasEntry: ItemListNodeEntry {
         case .hubInterface: return 3
         case .hubChat: return 4
         case .hubNetwork: return 5
-        case .hubFooter: return 6
         case .ghostModeMaster: return 9
         case .ghostDontReadMessages: return 10
         case .ghostDontReadStories: return 11
@@ -1038,8 +1033,6 @@ private enum ForkExtrasEntry: ItemListNodeEntry {
             return ItemListDisclosureItem(presentationData: presentationData, systemStyle: .glass, icon: PresentationResourcesSettings.proxy, title: ForkExtrasLocalizedString.hubNetwork, label: ForkExtrasLocalizedString.hubNetworkLabel, sectionId: self.section, style: .blocks, action: {
                 arguments.openCategory(.network)
             })
-        case .hubFooter:
-            return ItemListTextItem(presentationData: presentationData, text: .plain(ForkExtrasLocalizedString.hubFooter), sectionId: self.section)
         case let .ghostModeMaster(value):
             return ItemListSwitchItem(presentationData: presentationData, systemStyle: .glass, title: ForkExtrasLocalizedString.ghostModeMaster, value: value, sectionId: self.section, style: .blocks, updated: { value in
                 arguments.updateGhostModeMaster(value)
@@ -1405,7 +1398,6 @@ private func forkExtrasControllerEntries(settings: ForkExtrasSettings, autoFetch
             .hubInterface,
             .hubChat,
             .hubNetwork,
-            .hubFooter,
         ]
     }
 
