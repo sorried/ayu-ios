@@ -18,6 +18,10 @@ name: Build sideload IPA
 on:
   push:
     tags: ['v*']
+    branches: ['ios']
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
   workflow_dispatch:
     inputs:
       create_release:
@@ -142,9 +146,10 @@ jobs:
           cfg["enable_icloud"] = False
           api_id = os.environ.get("TELEGRAM_API_ID") or ""
           api_hash = os.environ.get("TELEGRAM_API_HASH") or ""
-          if api_id and api_hash:
-              cfg["api_id"] = api_id
-              cfg["api_hash"] = api_hash
+          if not api_id or not api_hash:
+              raise SystemExit("TELEGRAM_API_ID and TELEGRAM_API_HASH secrets are required")
+          cfg["api_id"] = api_id
+          cfg["api_hash"] = api_hash
           with open(path, "w") as f:
               json.dump(cfg, f, indent="\t")
               f.write("\n")
@@ -234,8 +239,78 @@ jobs:
               print("::warning::IPA missing expected fake-signing artifacts; Sideloadly may still re-sign")
           PY
 
+      - name: Verify IPA contents
+        run: |
+          set -euo pipefail
+          python3 - "$PWD/artifacts/${IPA_NAME}" <<'PY'
+          import os, sys, zipfile, plistlib
+
+          ipa = sys.argv[1]
+          size = os.path.getsize(ipa)
+          print(f"ipa size: {size} bytes ({size / (1024 * 1024):.1f} MiB)")
+
+          def fail(msg):
+              print(f"::error::{msg}")
+              sys.exit(1)
+
+          with zipfile.ZipFile(ipa) as z:
+              names = z.namelist()
+
+          # Exactly one top-level .app under Payload/.
+          apps = sorted({n.split("/", 1)[1].split("/", 1)[0]
+                         for n in names
+                         if n.startswith("Payload/") and n.count("/") == 1 and n.endswith(".app/")})
+          if len(apps) != 1:
+              fail(f"expected exactly one .app in Payload, found {apps}")
+          app = f"Payload/{apps[0]}"
+
+          # No extension bundles (PlugIns dir or .appex) — extensions are disabled.
+          ext = [n for n in names if "/PlugIns/" in n or ".appex/" in n]
+          if ext:
+              fail(f"unexpected extension bundles: {ext[:5]}")
+
+          # Single bundle id, plus the keys a sideload app needs to boot.
+          info_name = f"{app}/Info.plist"
+          if info_name not in names:
+              fail(f"missing {info_name}")
+          info = plistlib.loads(z.read(info_name))
+          bundle_id = info.get("CFBundleIdentifier")
+          if not bundle_id:
+              fail("CFBundleIdentifier missing from app Info.plist")
+          print(f"bundle id: {bundle_id}")
+
+          required = {
+              "CFBundleIdentifier": bundle_id,
+              "CFBundleExecutable": info.get("CFBundleExecutable"),
+              "CFBundleVersion": info.get("CFBundleVersion"),
+              "CFBundleShortVersionString": info.get("CFBundleShortVersionString"),
+              "CFBundlePackageType": info.get("CFBundlePackageType"),
+              "LSRequiresIPhoneOS": info.get("LSRequiresIPhoneOS"),
+          }
+          missing = [k for k, v in required.items() if v in (None, "")]
+          if missing:
+              fail(f"missing or empty Info.plist keys: {missing}")
+
+          # The fork author's api_id/api_hash must not leak into the binary.
+          forbidden = [b"27989480", b"ff8662eec9630346532b13f56014c258"]
+          leaked = []
+          for name in names:
+              if name.endswith("/"):
+                  continue
+              try:
+                  data = z.read(name)
+              except Exception:
+                  continue
+              if any(token in data for token in forbidden):
+                  leaked.append(name)
+          if leaked:
+              fail(f"fork author api credentials leaked into: {leaked[:5]}")
+
+          print("verified: no PlugIns, single bundle id, required keys, no fork api credentials")
+          PY
+
       - name: Publish GitHub release
-        if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.create_release == true)
+        if: success() && (startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.create_release == true))
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
