@@ -705,6 +705,7 @@ public final class SharedAccountContextImpl: SharedAccountContext {
                         switch result {
                             case let .authorized(account):
                                 setupAccount(account, fetchCachedResourceRepresentation: fetchCachedResourceRepresentation, transformOutgoingMessageMedia: transformOutgoingMessageMedia)
+                                let _ = (TelegramEngine(account: account).privacy.restorePeekLastSeenIfNeeded()).start()
                                 return TelegramEngine(account: account).data.get(
                                     TelegramEngine.EngineData.Item.Configuration.Limits(),
                                     TelegramEngine.EngineData.Item.Configuration.ContentSettings(),
