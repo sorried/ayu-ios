@@ -766,7 +766,7 @@ public func makeDefaultDarkPresentationTheme(extendingThemeReference: Presentati
     )
 
     let chat = PresentationThemeChat(
-        defaultWallpaper: .color(0x000000),
+        defaultWallpaper: .color(0x1B1C17),
         animateMessageColors: false,
         message: message,
         serviceMessage: serviceMessage,
