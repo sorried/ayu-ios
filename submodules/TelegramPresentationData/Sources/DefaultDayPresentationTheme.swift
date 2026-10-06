@@ -53,7 +53,7 @@ public func dateFillNeedsBlur(theme: PresentationTheme, wallpaper: TelegramWallp
 
 public let defaultServiceBackgroundColor = UIColor(rgb: 0x000000, alpha: 0.2)
 public let defaultPresentationTheme = makeDefaultDayPresentationTheme(serviceBackgroundColor: defaultServiceBackgroundColor, day: false, preview: false)
-public let defaultDayAccentColor = UIColor(rgb: 0x007AFF)
+public let defaultDayAccentColor = UIColor(rgb: 0x57651A)
 
 public func customizeDefaultDayTheme(theme: PresentationTheme, editing: Bool, title: String?, accentColor: UIColor?, outgoingAccentColor: UIColor?, backgroundColors: [UInt32], bubbleColors: [UInt32], animateBubbleColors: Bool?, wallpaper forcedWallpaper: TelegramWallpaper? = nil, serviceBackgroundColor: UIColor?) -> PresentationTheme {
     if (theme.referenceTheme != .day && theme.referenceTheme != .dayClassic) {
@@ -85,7 +85,7 @@ public func customizeDefaultDayTheme(theme: PresentationTheme, editing: Bool, ti
     // on it keeps the colours they chose. So are gift and chat themes: those come through with
     // `editing: false` and carry colours the sender picked, which are not ours to overwrite.
     if day && editing {
-        bubbleColors = [UIColor(rgb: 0x007AFF).rgb]
+        bubbleColors = [UIColor(rgb: 0xDFE6C4).rgb]
     }
     if bubbleColors.isEmpty, editing {
         if day {
@@ -664,7 +664,7 @@ public func makeDefaultDayPresentationTheme(extendingThemeReference: Presentatio
         outgoing: PresentationThemePartedColors(
             bubble: PresentationThemeBubbleColor(
                 withWallpaper: PresentationThemeBubbleColorComponents(
-                    fill: [UIColor(rgb: 0x007AFF)],
+                    fill: [UIColor(rgb: 0x57651A)],
                     highlightedFill: UIColor(rgb: 0x0062CC),
                     stroke: bubbleStrokeColor,
                     shadow: nil,
@@ -680,7 +680,7 @@ public func makeDefaultDayPresentationTheme(extendingThemeReference: Presentatio
                     reactionActiveMediaPlaceholder: UIColor(rgb: 0xffffff, alpha: 0.2)
                 ),
                 withoutWallpaper: PresentationThemeBubbleColorComponents(
-                    fill: [UIColor(rgb: 0x007AFF)],
+                    fill: [UIColor(rgb: 0x57651A)],
                     highlightedFill: UIColor(rgb: 0x0062CC),
                     stroke: bubbleStrokeColor,
                     shadow: nil,
@@ -831,7 +831,7 @@ public func makeDefaultDayPresentationTheme(extendingThemeReference: Presentatio
         outgoing: PresentationThemePartedColors(
             bubble: PresentationThemeBubbleColor(
                 withWallpaper: PresentationThemeBubbleColorComponents(
-                    fill: [UIColor(rgb: 0x007AFF)],
+                    fill: [UIColor(rgb: 0x57651A)],
                     highlightedFill: UIColor(rgb: 0x0062CC),
                     stroke: .clear,
                     shadow: nil,
@@ -847,7 +847,7 @@ public func makeDefaultDayPresentationTheme(extendingThemeReference: Presentatio
                     reactionActiveMediaPlaceholder: UIColor(rgb: 0xffffff, alpha: 0.2)
                 ),
                 withoutWallpaper: PresentationThemeBubbleColorComponents(
-                    fill: [UIColor(rgb: 0x007AFF)],
+                    fill: [UIColor(rgb: 0x57651A)],
                     highlightedFill: UIColor(rgb: 0x0062CC),
                     stroke: .clear,
                     shadow: nil,
