@@ -555,7 +555,7 @@ public func makeDefaultDarkPresentationTheme(extendingThemeReference: Presentati
         incoming: PresentationThemePartedColors(
             bubble: PresentationThemeBubbleColor(
                 withWallpaper: PresentationThemeBubbleColorComponents(
-                    fill: [UIColor(rgb: 0x2C2C2E, alpha: incomingBubbleAlpha)],
+                    fill: [UIColor(rgb: 0x30312B, alpha: incomingBubbleAlpha)],
                     highlightedFill: UIColor(rgb: 0xffffff, alpha: 0.35),
                     stroke: .clear,
                     shadow: nil,
@@ -571,7 +571,7 @@ public func makeDefaultDarkPresentationTheme(extendingThemeReference: Presentati
                     reactionActiveMediaPlaceholder: UIColor(rgb: 0x000000, alpha: 0.1)
                 ),
                 withoutWallpaper: PresentationThemeBubbleColorComponents(
-                    fill: [UIColor(rgb: 0x2C2C2E, alpha: incomingBubbleAlpha)],
+                    fill: [UIColor(rgb: 0x30312B, alpha: incomingBubbleAlpha)],
                     highlightedFill: UIColor(rgb: 0xffffff, alpha: 0.35),
                     stroke: .clear,
                     shadow: nil,

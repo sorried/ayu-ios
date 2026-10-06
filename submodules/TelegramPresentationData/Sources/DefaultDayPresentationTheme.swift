@@ -609,7 +609,7 @@ public func makeDefaultDayPresentationTheme(extendingThemeReference: Presentatio
         incoming: PresentationThemePartedColors(
             bubble: PresentationThemeBubbleColor(
                 withWallpaper: PresentationThemeBubbleColorComponents(
-                    fill: [UIColor(rgb: 0xE9E9EB)],
+                    fill: [UIColor(rgb: 0xF3F3E7)],
                     highlightedFill: UIColor(rgb: 0xDCDCDE),
                     stroke: bubbleStrokeColor,
                     shadow: nil,
@@ -625,7 +625,7 @@ public func makeDefaultDayPresentationTheme(extendingThemeReference: Presentatio
                     reactionActiveMediaPlaceholder: UIColor(rgb: 0xffffff, alpha: 0.2)
                 ),
                 withoutWallpaper: PresentationThemeBubbleColorComponents(
-                    fill: [UIColor(rgb: 0xE9E9EB)],
+                    fill: [UIColor(rgb: 0xF3F3E7)],
                     highlightedFill: UIColor(rgb: 0xDCDCDE),
                     stroke: bubbleStrokeColor,
                     shadow: nil,
@@ -773,9 +773,9 @@ public func makeDefaultDayPresentationTheme(extendingThemeReference: Presentatio
         incoming: PresentationThemePartedColors(
             bubble: PresentationThemeBubbleColor(
                 withWallpaper: PresentationThemeBubbleColorComponents(
-                    fill: [UIColor(rgb: 0xE9E9EB)],
+                    fill: [UIColor(rgb: 0xF3F3E7)],
                     highlightedFill: UIColor(rgb: 0xDCDCDE),
-                    stroke: UIColor(rgb: 0xE9E9EB),
+                    stroke: UIColor(rgb: 0xF3F3E7),
                     shadow: nil,
                     reactionInactiveBackground: defaultDayAccentColor.withMultipliedAlpha(0.1),
                     reactionInactiveForeground: defaultDayAccentColor,
@@ -789,9 +789,9 @@ public func makeDefaultDayPresentationTheme(extendingThemeReference: Presentatio
                     reactionActiveMediaPlaceholder: UIColor(rgb: 0xffffff, alpha: 0.2)
                 ),
                 withoutWallpaper: PresentationThemeBubbleColorComponents(
-                    fill: [UIColor(rgb: 0xE9E9EB)],
+                    fill: [UIColor(rgb: 0xF3F3E7)],
                     highlightedFill: UIColor(rgb: 0xDCDCDE),
-                    stroke: UIColor(rgb: 0xE9E9EB),
+                    stroke: UIColor(rgb: 0xF3F3E7),
                     shadow: nil,
                     reactionInactiveBackground: .clear,
                     reactionInactiveForeground: defaultDayAccentColor,
